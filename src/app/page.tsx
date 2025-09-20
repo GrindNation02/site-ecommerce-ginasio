@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { ShoppingCart, User, Search, Menu, X, Plus, Minus, Star, Shield, RefreshCw, Heart, Quote } from 'lucide-react'
+import { ShoppingCart, User, Search, Menu, X, Plus, Minus, Star, Truck, Shield, RefreshCw, Heart } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Badge } from '@/components/ui/badge'
@@ -29,16 +29,6 @@ interface CartItem extends Product {
   quantity: number
   selectedColor: string
   selectedSize: string
-}
-
-interface Review {
-  id: number
-  name: string
-  rating: number
-  comment: string
-  date: string
-  verified: boolean
-  productId?: number
 }
 
 const products: Product[] = [
@@ -121,62 +111,6 @@ const products: Product[] = [
     reviews: 92,
     description: "Ignite your passion with every sip. Perfect for your morning routine.",
     features: ["High-Quality Ceramic", "Comfortable Handle", "Heat Resistant", "Vibrant Colors"]
-  }
-]
-
-const customerReviews: Review[] = [
-  {
-    id: 1,
-    name: "Marcus Johnson",
-    rating: 5,
-    comment: "Absolutely love my Grind Nation hoodie! The quality is outstanding and it fits perfectly. The material is thick and comfortable, perfect for both workouts and casual wear. Will definitely be ordering more!",
-    date: "2024-01-15",
-    verified: true,
-    productId: 1
-  },
-  {
-    id: 2,
-    name: "Sarah Chen",
-    rating: 5,
-    comment: "The Beast Mode tee is incredible! Super soft fabric that doesn't shrink after washing. The print quality is amazing and hasn't faded at all. This is my go-to gym shirt now.",
-    date: "2024-01-12",
-    verified: true,
-    productId: 2
-  },
-  {
-    id: 3,
-    name: "David Rodriguez",
-    rating: 4,
-    comment: "Great motivational mug! I use it every morning for my pre-workout coffee. The design is inspiring and the ceramic quality is excellent. Only wish it came in a larger size option.",
-    date: "2024-01-10",
-    verified: true,
-    productId: 3
-  },
-  {
-    id: 4,
-    name: "Emma Thompson",
-    rating: 5,
-    comment: "Grind Nation has become my favorite fitness brand! The quality is consistently amazing across all their products. Fast shipping and excellent customer service too.",
-    date: "2024-01-08",
-    verified: true
-  },
-  {
-    id: 5,
-    name: "Jake Wilson",
-    rating: 5,
-    comment: "The No Excuses hoodie is built to last! I've been wearing it to the gym for months and it still looks brand new. The fit is perfect and the message keeps me motivated.",
-    date: "2024-01-05",
-    verified: true,
-    productId: 4
-  },
-  {
-    id: 6,
-    name: "Lisa Park",
-    rating: 4,
-    comment: "Love the Strength & Honor tee! The fabric is so comfortable and breathable during workouts. The design is subtle but powerful. Highly recommend for anyone serious about fitness.",
-    date: "2024-01-03",
-    verified: true,
-    productId: 5
   }
 ]
 
@@ -326,7 +260,7 @@ export default function GrindNationStore() {
                     </TabsContent>
                     <TabsContent value="orders" className="space-y-4">
                       <div className="text-center py-8 text-gray-500">
-                        <ShoppingCart className="w-12 h-12 mx-auto mb-4 text-gray-300" />
+                        <Truck className="w-12 h-12 mx-auto mb-4 text-gray-300" />
                         <p>No orders yet</p>
                         <p className="text-sm">Your order history will appear here</p>
                       </div>
@@ -484,6 +418,10 @@ export default function GrindNationStore() {
             </Button>
             <div className="flex items-center space-x-6 text-sm">
               <div className="flex items-center space-x-2">
+                <Truck className="w-5 h-5 text-orange-500" />
+                <span>Free Shipping</span>
+              </div>
+              <div className="flex items-center space-x-2">
                 <Shield className="w-5 h-5 text-orange-500" />
                 <span>Secure Payment</span>
               </div>
@@ -577,91 +515,6 @@ export default function GrindNationStore() {
                 </CardContent>
               </Card>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Customer Reviews Section */}
-      <section className="py-12 md:py-16 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h3 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              What Our Customers Say
-            </h3>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Join thousands of satisfied customers who have transformed their fitness journey with Grind Nation
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {customerReviews.map((review) => (
-              <Card key={review.id} className="hover:shadow-lg transition-shadow duration-300">
-                <CardContent className="p-6">
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center space-x-2">
-                      <div className="w-10 h-10 bg-gradient-to-r from-orange-500 to-red-600 rounded-full flex items-center justify-center text-white font-bold text-sm">
-                        {review.name.charAt(0)}
-                      </div>
-                      <div>
-                        <h4 className="font-semibold text-gray-900">{review.name}</h4>
-                        {review.verified && (
-                          <Badge variant="secondary" className="text-xs bg-green-100 text-green-800">
-                            Verified Purchase
-                          </Badge>
-                        )}
-                      </div>
-                    </div>
-                    <Quote className="w-6 h-6 text-orange-500" />
-                  </div>
-                  
-                  <div className="flex items-center mb-3">
-                    {[...Array(5)].map((_, i) => (
-                      <Star 
-                        key={i} 
-                        className={`w-4 h-4 ${i < review.rating ? 'text-yellow-400 fill-current' : 'text-gray-300'}`} 
-                      />
-                    ))}
-                    <span className="text-sm text-gray-500 ml-2">{review.rating}/5</span>
-                  </div>
-                  
-                  <p className="text-gray-700 mb-4 leading-relaxed">
-                    "{review.comment}"
-                  </p>
-                  
-                  <div className="text-xs text-gray-500">
-                    {new Date(review.date).toLocaleDateString('en-US', { 
-                      year: 'numeric', 
-                      month: 'long', 
-                      day: 'numeric' 
-                    })}
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-
-          <div className="text-center mt-12">
-            <div className="bg-gray-50 rounded-2xl p-8 max-w-4xl mx-auto">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-orange-600 mb-2">4.8/5</div>
-                  <div className="flex justify-center mb-2">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="w-5 h-5 text-yellow-400 fill-current" />
-                    ))}
-                  </div>
-                  <p className="text-gray-600">Average Rating</p>
-                </div>
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-orange-600 mb-2">2,500+</div>
-                  <p className="text-gray-600">Happy Customers</p>
-                </div>
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-orange-600 mb-2">98%</div>
-                  <p className="text-gray-600">Would Recommend</p>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </section>
